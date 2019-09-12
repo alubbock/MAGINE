@@ -7,18 +7,6 @@ env:
 - PYVER=3.7
 cache: pip
 before_install:
-  # setup igraph.
-  #  - sudo apt-get install build-essential python-dev libxml2 libxml2-dev zlib1g-dev autoconf
-  #  - wget https://github.com/igraph/igraph/releases/download/0.7.1/igraph-0.7.1.tar.gz
-  #  - tar -xzf igraph-0.7.1.tar.gz
-  #  - cd igraph
-  #  - autoconf
-  #  - ./configure
-  #  - make
-  #  - make check
-  #  - make install
-  #  - cd ..
-  # install conda
   - wget http://repo.continuum.io/miniconda/Miniconda${PYVER:0:1}-latest-Linux-x86_64.sh -O miniconda.sh
   - chmod +x miniconda.sh
   - bash miniconda.sh -b -p $HOME/miniconda
@@ -33,6 +21,8 @@ before_install:
   - pip install nose-exclude
   - pip install nose-timer
   - pip install codecov
+  - pip install pytest
+  - pip install nbval
 
 install:
   - sudo apt-get install graphviz
@@ -40,7 +30,7 @@ install:
 
 script:
   - python copy_sample_data.py
-  - travis_wait 45 nosetests build/lib/magine/tests --with-coverage --cover-inclusive --cover-package=build/lib/magine --logging-level=INFO --with-timer
+  - travis_wait 45 pytest --nbval build/lib/magine/examples/cisplatin/Tutorial.ipynb build/lib/magine/tests --with-coverage --cover-inclusive --cover-package=build/lib/magine --logging-level=INFO --with-timer
 after_success:
   - codecov
   - coveralls
