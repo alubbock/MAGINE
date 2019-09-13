@@ -25,11 +25,13 @@ before_install:
 
 install:
   - sudo apt-get install graphviz
-  - python setup.py build --build-lib=build/lib
+  - python setup.py install
+#  - python setup.py build --build-lib=build/lib
 
 script:
   - python copy_sample_data.py
-  - travis_wait 45 pytest --cov=build/lib/magine --durations=0 --nbval build/lib/magine/examples/cisplatin/Tutorial.ipynb build/lib/magine/tests
+  #  - travis_wait 45 pytest --cov=build/lib/magine --durations=0 --nbval build/lib/magine/examples/cisplatin/Tutorial.ipynb build/lib/magine/tests
+  - travis_wait 45 pytest --cov=magine --durations=0 --nbval
 after_success:
   - codecov
   - coveralls
