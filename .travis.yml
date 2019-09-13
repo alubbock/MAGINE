@@ -30,7 +30,6 @@ install:
 
 script:
   - python copy_sample_data.py
-  - travis_wait 45 pytest --nbval build/lib/magine/examples/cisplatin/Tutorial.ipynb build/lib/magine/tests --with-coverage --cover-inclusive --cover-package=build/lib/magine --logging-level=INFO --with-timer
   - travis_wait 45 pytest --with-coverage --cover-inclusive --cover-package=build/lib/magine --logging-level=INFO --with-timer --nbval build/lib/magine/examples/cisplatin/Tutorial.ipynb build/lib/magine/tests
 after_success:
   - codecov
